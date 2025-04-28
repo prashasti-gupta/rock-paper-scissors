@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>You Win</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .main-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .centered-div {
+      position: absolute;
+      top: 58%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 800px;
+      height: 400px;
+      margin-right: 50px;
+      background: transparent;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .content-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      margin-right: 60px;
+    }
+
+    .centered-text {
+      font-size: 36px;
+      font-weight: bold;
+      color: white;
+      text-align: center;
+      letter-spacing: 4px;
+      margin-top: 130px;
+    }
+
+    p {
+      margin-top: 0;
+      letter-spacing: 3px;
+      font-size: 24px;
+      margin-bottom: 1px;
+    }
+
+    .img-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .picked-text {
+      font-weight: bold;
+      font-size: 18px;
+      color: white;
+      margin-bottom: 40px;
+      letter-spacing: 2px;
+    }
+    
+    #pc-text{
+      margin-bottom: 0;
+      margin-top: 40px;
+    }
+
+    .ripple-wrapper {
+      position: relative;
+      width: 332px;
+      height: 332px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(0, 128, 0, 0.3);
+      animation: ripple-animation 2s infinite;
+    }
+
+    .ripple:nth-child(1) {
+      width: 332px;
+      height: 332px;
+      z-index: 1;
+    }
+
+    .ripple:nth-child(2) {
+      width: 270px;
+      height: 270px;
+      z-index: 2;
+    }
+
+    .ripple:nth-child(3) {
+      width: 210px;
+      height: 210px;
+      z-index: 3;
+    }
+
+    .circle {
+      width: 140px;
+      height: 140px;
+      background-color: white;
+      border: 12px solid; 
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 4;
+    }
+
+    .circle-img {
+      width: 70%;
+      height: 70%;
+      object-fit: contain;
+    }
+
+    .playagain-button {
+      padding: 10px 25px;
+      background-color: white;
+      color: gray;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .playagain-button:hover {
+      background-color: #E1D9D1;
+    }
+
+    @keyframes ripple-animation {
+      0% {
+        transform: scale(1);
+        opacity: 0.6;
+      }
+      100% {
+        transform: scale(1.1);
+        opacity: 0.3;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="main-container">
+    <div class="scoreboard">
+      <div class="game-title">
+        ROCK<br>PAPER<br>SCISSORS
+      </div>
+      <div class="scores">
+        <div class="score-box">
+          <h4>COMPUTER<br>SCORE</h4>
+          <div class="score">0</div>
+        </div>
+        <div class="score-box">
+          <h4>YOUR<br>SCORE</h4>
+          <div class="score">0</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="centered-div">
+    <div class="img-container" id="player-choice">
+      <div class="picked-text" id="pc-text">YOU PICKED</div>
+      <div class="ripple-wrapper">
+        <div class="ripple"></div>
+        <div class="ripple"></div>
+        <div class="ripple"></div>
+        <div class="circle" id="player-circle">
+          <img src="" alt="your choice" class="circle-img" id="player-img">
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="content-wrapper">
+      <div class="centered-text">YOU WIN<br><p>AGAINST PC</p></div>
+      <button class="playagain-button" onclick="window.location.href='home.html'">PLAY AGAIN</button>
+    </div>
+
+    <div class="img-container" id="computer-choice">
+      <div class="picked-text">PC PICKED</div>
+      <div class="circle" id="computer-circle">
+        <img src="" alt="PC choice" class="circle-img" id="computer-img">
+      </div>
+    </div>
+    
+  </div>
+
+  <button class="rules-btn" style="margin-right: 140px;" onclick="window.location.href='home.html'">RULES</button>
+  <button class="rules-btn" onclick="window.location.href='result.html'">NEXT</button>
+
+  <script>
+    const choiceToImage = {
+      rock: './images/rock.png',
+      paper: './images/paper.png',
+      scissors: './images/scissor.png'
+    };
+
+    const choiceToBorderColor = {
+      rock: '#0375b1',
+      paper: '#fdaa44', 
+      scissors: '#b902fb'
+    };
+
+    // Updating scores
+    document.querySelectorAll('.score')[0].textContent = localStorage.getItem('computerScore') || 0;
+    document.querySelectorAll('.score')[1].textContent = localStorage.getItem('playerScore') || 0;
+
+    //player and pc choices
+    const playerChoice = localStorage.getItem('playerChoice');
+    const computerChoice = localStorage.getItem('computerChoice');
+
+    const playerImg = document.getElementById('player-img');
+    const computerImg = document.getElementById('computer-img');
+    const playerCircle = document.getElementById('player-circle');
+    const computerCircle = document.getElementById('computer-circle');
+
+    playerImg.src = choiceToImage[playerChoice];
+    computerImg.src = choiceToImage[computerChoice];
+
+    playerCircle.style.borderColor = choiceToBorderColor[playerChoice] || 'black';
+    computerCircle.style.borderColor = choiceToBorderColor[computerChoice] || 'black';
+  </script>
+
+</body>
+</html>

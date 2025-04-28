@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+</head>
+
+<body>
+    <div class="main-container">
+        <div class="scoreboard">
+          <div class="game-title">
+            ROCK<br>
+            PAPER<br>
+            SCISSORS
+          </div>
+          <div class="scores">
+            <div class="score-box">
+              <h4>COMPUTER<br>SCORE</h4>
+              <div class="score">0</div>
+            </div>
+            <div class="score-box">
+              <h4>YOUR<br>SCORE</h4>
+              <div class="score">0</div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="rps-container">
+        <div class="line line-1"></div>
+        <div class="line line-2"></div>
+        <div class="line line-3"></div>
+      
+        <div class="choice rock">
+            <button class="rpsIcon">
+                <img src="./images/rock.png" alt="rock">
+              </button>
+        </div>
+        <div class="choice scissors">
+            <button class="rpsIcon">
+                <img src="./images/scissor.png" alt="scissor">
+              </button>
+        </div>
+        <div class="choice paper">
+            <button class="rpsIcon">
+                <img src="./images/paper.png" alt="paper">
+              </button>
+        </div>
+      </div>
+      
+
+      <div class="rules-box">
+        <button class="close-btn">X</button>
+        <h3>Game Rules</h3>
+        <ul>
+          <li>Rock beats scissors, scissors beat paper, and paper beats rock.</li>
+          <li>Agree ahead of time whether you’ll count off “rock, paper, scissors, shoot” or just “rock, paper, scissors.”</li>
+          <li>Use rock, paper, scissors to settle minor decisions or simply play to pass the time.</li>
+          <li>If both players lay down the same hand, each player lays down another hand.</li>
+        </ul>
+      </div> 
+      
+    <button class="rules-btn">RULES</button>
+
+    <script>
+        // Initializing scores
+        if (!localStorage.getItem('playerScore')) localStorage.setItem('playerScore', 0);
+        if (!localStorage.getItem('computerScore')) localStorage.setItem('computerScore', 0);
+      
+        //updated scores
+        document.addEventListener('DOMContentLoaded', () => {
+          document.querySelectorAll('.score')[0].textContent = localStorage.getItem('computerScore');
+          document.querySelectorAll('.score')[1].textContent = localStorage.getItem('playerScore');
+        });
+      
+        const choices = ['rock', 'scissors', 'paper'];
+      
+        document.querySelectorAll('.rpsIcon').forEach((button, index) => {
+          button.addEventListener('click', () => {
+            const playerChoice = choices[index];
+            const computerChoice = choices[Math.floor(Math.random() * 3)];
+      
+            localStorage.setItem('playerChoice', playerChoice);
+            localStorage.setItem('computerChoice', computerChoice);
+      
+            let playerScore = parseInt(localStorage.getItem('playerScore'));
+            let computerScore = parseInt(localStorage.getItem('computerScore'));
+      
+            if (playerChoice === computerChoice) {
+              window.location.href = 'tie.html';
+            } else if (
+              (playerChoice === 'rock' && computerChoice === 'scissors') ||
+              (playerChoice === 'paper' && computerChoice === 'rock') ||
+              (playerChoice === 'scissors' && computerChoice === 'paper')
+            ) {
+              localStorage.setItem('playerScore', playerScore + 1);
+              window.location.href = 'won.html';
+            } else {
+              localStorage.setItem('computerScore', computerScore + 1);
+              window.location.href = 'lost.html';
+            }
+          });
+        });
+    </script>
+
+</body>
+</html>

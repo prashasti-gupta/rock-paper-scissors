@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TIE</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+  <style>
+    body{
+      font-family: 'Roboto';
+    }
+    .main-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .centered-div {
+      position: absolute;
+      top: 60%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 700px;
+      height: 300px;
+      background: transparent;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .content-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .centered-text {
+      font-size: 36px;
+      font-weight: bold;
+      color: white;
+      text-align: center;
+      letter-spacing: 4px;
+      margin-top: 130px;
+      flex-grow: 1;
+    }
+
+    .img-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 180px;
+      height: 200px;
+    }
+
+    .circle {
+      width: 140px;
+      height: 140px;
+      background-color: white;
+      border: 12px solid gray;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .circle-img {
+      width: 70%;
+      height: 70%;
+      object-fit: contain;
+    }
+
+    .playagain-button {
+      padding: 10px 25px;
+      background-color: white;
+      color: gray;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      letter-spacing: 2px;
+      margin-top: 30px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .playagain-button:hover {
+      background-color: #E1D9D1;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="main-container">
+    <div class="scoreboard">
+      <div class="game-title">
+        ROCK<br>PAPER<br>SCISSORS
+      </div>
+      <div class="scores">
+        <div class="score-box">
+          <h4>COMPUTER<br>SCORE</h4>
+          <div class="score">0</div>
+        </div>
+        <div class="score-box">
+          <h4>YOUR<br>SCORE</h4>
+          <div class="score">0</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="centered-div">
+    <div class="img-container" id="player-choice" style="display: flex; flex-direction: column; align-items: center;">
+      <div style="font-weight: bold; font-size: 18px; color: white; margin-bottom: 20px; letter-spacing: 2px;">YOU PICKED</div>
+      <div class="circle" id="player-circle">
+        <img src="" alt="your choice" class="circle-img" id="player-img">
+      </div>
+    </div>
+    <div class="content-wrapper">
+      <div class="centered-text">TIE UP</div>
+      <button class="playagain-button" onclick="window.location.href='home.html'">PLAY AGAIN</button>
+    </div>
+    <div class="img-container" id="computer-choice" style="display: flex; flex-direction: column; align-items: center;">
+      <div style="font-weight: bold; font-size: 18px; color: white; margin-bottom: 20px; letter-spacing: 2px;">PC PICKED</div>
+      <div class="circle" id="computer-circle">
+        <img src="" alt="PC choice" class="circle-img" id="computer-img">
+      </div>
+    </div>    
+  </div>
+
+  <button class="rules-btn" onclick="window.location.href='home.html'">RULES</button>
+
+
+  <script>
+    const choiceToImage = {
+      rock: './images/rock.png',
+      paper: './images/paper.png',
+      scissors: './images/scissor.png'
+    };
+
+    const choiceToBorderColor = {
+      rock: '#0375b1',
+      paper: '#fdaa44', 
+      scissors: '#b902fb'
+    };
+
+    // Updating scores
+    document.querySelectorAll('.score')[0].textContent = localStorage.getItem('computerScore') || 0;
+    document.querySelectorAll('.score')[1].textContent = localStorage.getItem('playerScore') || 0;
+
+    //storing choices
+    const playerChoice = localStorage.getItem('playerChoice');
+    const computerChoice = localStorage.getItem('computerChoice');
+
+    const playerImg = document.getElementById('player-img');
+    const computerImg = document.getElementById('computer-img');
+    const playerCircle = document.getElementById('player-circle');
+    const computerCircle = document.getElementById('computer-circle');
+
+    //images
+    playerImg.src = choiceToImage[playerChoice];
+    computerImg.src = choiceToImage[computerChoice];
+
+    //border colors
+    playerCircle.style.borderColor = choiceToBorderColor[playerChoice] || 'gray';
+    computerCircle.style.borderColor = choiceToBorderColor[computerChoice] || 'gray';
+
+  </script>
+
+</body>
+</html>
